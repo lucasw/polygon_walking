@@ -17,6 +17,14 @@ def stick_person(screen, color, center, length, width, gait_angle, gait_pos):
   gait_pos = 1.0 - (gait_pos - int(gait_pos))
   foot_pos = get_foot_pos(gait_angle, gait_pos, center, length)
   pygame.draw.line(screen, color, center, foot_pos, width)
+ 
+  # upper body
+  fr = 0.6
+  torso_length = length * fr
+  head_radius = length * (1.0 - fr) * 0.5
+  pygame.draw.line(screen, color, center, (center[0], center[1] - torso_length), width)
+  pygame.draw.circle(screen, color, \
+      (center[0], int(center[1] - (torso_length + head_radius))), int(head_radius), width)
   
 def radially_symmetric_polygon(screen, color, sides, center, radius, width, offset):
 
@@ -63,11 +71,11 @@ while 1:
   radially_symmetric_polygon(screen, (200,200,200), sides, center, radius, line_width, rotation)
 
   # ground
-  pygame.draw.line(screen, (128,128,128), \
+  pygame.draw.line(screen, (148,148,148), \
     (0, pos[1] + radius), (width, pos[1] + radius), line_width)
   
   stick_person(screen, black, center, radius, line_width * 2, gait_angle, gait_pos)
   pygame.display.flip()
   
-  rotation += 0.004
+  rotation += gait_angle / 128
   pygame.time.wait(10)
