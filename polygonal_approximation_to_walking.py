@@ -2,10 +2,20 @@ import math
 import pygame
 
 def stick_person(screen, color, center, length, width, gait_angle, gait_pos):
-
+  
+  gait_pos -= int(gait_pos) 
+  angle = gait_pos * gait_angle
   pygame.draw.line(screen, color, center, ( \
-     center[0] + length * math.cos( gait_pos * gait_angle ), \
-     center[1] + length * math.sin( gait_pos * gait_angle ) \
+     center[0] + length * math.cos( angle ), \
+     center[1] + length * math.sin( angle ) \
+     ), width)
+
+  # TODO make draw_leg function
+  gait_pos = 1.0 - gait_pos
+  angle = gait_pos * gait_angle
+  pygame.draw.line(screen, color, center, ( \
+     center[0] + length * math.cos( angle ), \
+     center[1] + length * math.sin( angle ) \
      ), width)
 
 def radially_symmetric_polygon(screen, color, sides, center, radius, width, offset):
@@ -44,4 +54,4 @@ while 1:
   stick_person(screen, black, pos, radius, line_width, gait_angle, rotation / gait_angle)
   pygame.display.flip()
   
-  rotation += 0.001
+  rotation += 0.002
