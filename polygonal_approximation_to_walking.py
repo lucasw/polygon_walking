@@ -37,8 +37,8 @@ while 1:
   screen.fill(white)
   pos = (int(width/2), int(height/2))
   radius = int(height/2.5)
-  pygame.draw.circle(screen, (32,32,32), pos, radius, line_width)
-  radially_symmetric_polygon(screen, (64,64,64), sides, pos, radius, line_width, rotation)
+  pygame.draw.circle(screen, (220,220,220), pos, radius, line_width)
+  radially_symmetric_polygon(screen, (190,190,190), sides, pos, radius, line_width, rotation)
 
   gait_angle = (2.0 * math.pi) / sides
   stick_person(screen, black, pos, radius, line_width, gait_angle, rotation / gait_angle)
