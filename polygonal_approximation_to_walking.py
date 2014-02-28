@@ -14,17 +14,26 @@ def stick_person(screen, color, center, length, width, gait_angle, gait_pos):
   pygame.draw.line(screen, color, center, foot_pos, width)
 
   # TODO make draw_leg function
-  gait_pos = 1.0 - (gait_pos - int(gait_pos))
-  foot_pos = get_foot_pos(gait_angle, gait_pos, center, length)
+  gait_pos2 = 1.0 - (gait_pos - int(gait_pos))
+  foot_pos = get_foot_pos(gait_angle, gait_pos2, center, length)
   pygame.draw.line(screen, color, center, foot_pos, width)
  
   # upper body
   fr = 0.6
   torso_length = length * fr
   head_radius = length * (1.0 - fr) * 0.5
-  pygame.draw.line(screen, color, center, (center[0], center[1] - torso_length), width)
-  pygame.draw.circle(screen, color, \
-      (center[0], int(center[1] - (torso_length + head_radius))), int(head_radius), width)
+  neck = (center[0], center[1] - torso_length)
+  head_center = (center[0], int(center[1] - (torso_length + head_radius)))
+  pygame.draw.line(screen, color, center, neck, width)
+  pygame.draw.circle(screen, color, head_center, int(head_radius), width)
+  
+  # arms
+  shoulder_center = (center[0], center[1] - (torso_length * 0.9))
+  arm_length = length * 0.7
+  hand_pos = get_foot_pos(gait_angle, gait_pos, shoulder_center, arm_length)
+  pygame.draw.line(screen, color, shoulder_center, hand_pos, width)
+  hand_pos = get_foot_pos(gait_angle, gait_pos2, shoulder_center, arm_length)
+  pygame.draw.line(screen, color, shoulder_center, hand_pos, width)
   
 def radially_symmetric_polygon(screen, color, sides, center, radius, width, offset):
 
