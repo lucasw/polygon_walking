@@ -1,9 +1,12 @@
 import math
 import pygame
 
+# make gait_pos go 0 - 1.0
+def conv_gait_pos(gait_pos):
+  return gait_pos - int(gait_pos)  
+
 def get_foot_pos(gait_angle, gait_pos, center, length, offset):
-  gait_pos -= int(gait_pos) 
-  angle = gait_pos * gait_angle + offset
+  angle = conv_gait_pos(gait_pos) * gait_angle + offset
   return (center[0] + length * math.cos( angle ), \
           center[1] + length * math.sin( angle ) )
 
@@ -13,7 +16,7 @@ def stick_person(screen, color, center, length, width, gait_angle, gait_pos, off
   pygame.draw.line(screen, color, center, foot_pos, width)
 
   # TODO make draw_leg function
-  gait_pos2 = 1.0 - (gait_pos - int(gait_pos))
+  gait_pos2 = 1.0 - conv_gait_pos(gait_pos)
   foot_pos = get_foot_pos(gait_angle, gait_pos2, center, length, offset)
   pygame.draw.line(screen, color, center, foot_pos, width)
  
@@ -55,11 +58,11 @@ screen = pygame.display.set_mode(size)
 black = 0,0,0
 white = 255,255,255
 
-rotation = 0
-sides = 5
+sides = 6
 line_width = 5
 gait_angle = (2.0 * math.pi) / sides
-offset = math.pi/2.0 - gait_angle/2
+rotation = 0
+offset = math.pi/2.0 - gait_angle / 2.0
 
 while 1:
   
@@ -68,7 +71,7 @@ while 1:
   pos = (int(width/2), int(height/2))
   radius = int(height/2.5)
   
-  gait_pos = rotation / gait_angle
+  gait_pos = rotation / gait_angle + 0.5
  
   # get offset from ground
   foot_pos1 = get_foot_pos(gait_angle, gait_pos, pos, radius, offset)
@@ -77,7 +80,7 @@ while 1:
   center = (pos[0], int(pos[1] + offset_y))
 
   pygame.draw.circle(screen, (230,230,230), center, radius, line_width)
-  radially_symmetric_polygon(screen, (200,200,200), sides, center, radius, line_width, rotation, offset)
+  radially_symmetric_polygon(screen, (200,200,200), sides, center, radius, line_width, rotation + gait_angle/2.0, offset)
 
   # ground
   pygame.draw.line(screen, (148,148,148), \
@@ -87,4 +90,4 @@ while 1:
   pygame.display.flip()
   
   rotation += gait_angle / 128
-  pygame.time.wait(10)
+  pygame.time.wait(20)
