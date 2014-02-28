@@ -55,15 +55,18 @@ while 1:
  
   # get offset from ground
   foot_pos1 = get_foot_pos(gait_angle, gait_pos, pos, radius)
+  #print pos[1], foot_pos1[1]
+  offset_y = pos[1] + radius - foot_pos1[1]
+  center = (pos[0], int(pos[1] + offset_y))
 
-  pygame.draw.circle(screen, (230,230,230), pos, radius, line_width)
-  radially_symmetric_polygon(screen, (200,200,200), sides, pos, radius, line_width, rotation)
+  pygame.draw.circle(screen, (230,230,230), center, radius, line_width)
+  radially_symmetric_polygon(screen, (200,200,200), sides, center, radius, line_width, rotation)
 
   # ground
   pygame.draw.line(screen, (128,128,128), \
     (0, pos[1] + radius), (width, pos[1] + radius), line_width)
   
-  stick_person(screen, black, pos, radius, line_width * 2, gait_angle, gait_pos)
+  stick_person(screen, black, center, radius, line_width * 2, gait_angle, gait_pos)
   pygame.display.flip()
   
   rotation += 0.004
