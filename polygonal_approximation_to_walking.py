@@ -1,3 +1,23 @@
+#
+# Copyright Lucas Walter February 2014
+# 
+# This file is part of polygon_walking.
+#
+# Foobar is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Foobar is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+# 
+
+
 import math
 import pygame
 
@@ -72,13 +92,14 @@ screen = pygame.display.set_mode(size)
 black = 0,0,0
 white = 255,255,255
 
-sides = 3
+sides = 12
 line_width = 5
 gait_angle = (2.0 * math.pi) / sides
 rotation = 0
 offset = math.pi/2.0 - gait_angle / 2.0
 
-while 1:
+num_frames = 64
+for i in range(num_frames):
   
   screen.fill(white)
  
@@ -103,5 +124,6 @@ while 1:
   stick_person(screen, black, center, radius, line_width * 2, gait_angle, gait_pos, offset)
   pygame.display.flip()
   
-  rotation += gait_angle / 64
-  pygame.time.wait(20)
+  rotation += gait_angle / num_frames
+  #pygame.time.wait(20)
+  pygame.image.save(screen, "images/polygonal_approximation_walking_" + str(sides) + "_" + str(1000 + i) + ".png")
