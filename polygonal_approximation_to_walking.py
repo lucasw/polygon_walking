@@ -47,8 +47,13 @@ line_width = 5
 while 1:
   
   screen.fill(white)
+ 
   pos = (int(width/2), int(height/2))
   radius = int(height/2.5)
+  # ground
+  pygame.draw.line(screen, (128,128,128), \
+    (0, pos[1] + radius), (width, pos[1] + radius), line_width)
+  
   pygame.draw.circle(screen, (230,230,230), pos, radius, line_width)
   radially_symmetric_polygon(screen, (200,200,200), sides, pos, radius, line_width, rotation)
 
