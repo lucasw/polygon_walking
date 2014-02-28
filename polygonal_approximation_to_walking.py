@@ -28,7 +28,7 @@ def stick_person(screen, color, center, length, width, gait_angle, gait_pos):
   pygame.draw.circle(screen, color, head_center, int(head_radius), width)
   
   # arms
-  shoulder_center = (center[0], center[1] - (torso_length * 0.9))
+  shoulder_center = (center[0], center[1] - (torso_length * 0.8))
   arm_length = length * 0.7
   hand_pos = get_foot_pos(gait_angle, gait_pos, shoulder_center, arm_length)
   pygame.draw.line(screen, color, shoulder_center, hand_pos, width)
